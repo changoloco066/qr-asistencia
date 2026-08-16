@@ -8,7 +8,7 @@ from api.auth import require_auth
 
 sessions_bp = Blueprint("sessions", __name__)
 
-TOKEN_LIFETIME_SECONDS = 25
+TOKEN_LIFETIME_SECONDS = 45
 
 
 @sessions_bp.route("/api/sessions/start", methods=["POST"])

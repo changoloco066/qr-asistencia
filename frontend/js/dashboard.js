@@ -4,7 +4,7 @@ if (!token) {
 }
 const authHeaders = { Authorization: `Bearer ${token}` };
 
-const TOKEN_ROTATE_MS = 20000; // rotate QR before the backend's 25s window closes
+const TOKEN_ROTATE_MS = 40000; // rotate QR before the backend's 25s window closes
 const STATUS_POLL_MS = 4000;
 const COUNTDOWN_SECONDS = TOKEN_ROTATE_MS / 1000;
 

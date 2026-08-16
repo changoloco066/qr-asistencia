@@ -111,6 +111,15 @@ GitHub repo → **Settings → Collaborators and teams → Add people** → ente
 
 ## Status
 
-- ✅ **Phase 1 — Roster management.** `api/auth.py` (login, JWT) and `api/roster.py` (add one student, bulk CSV upload, delete) are implemented, with `frontend/login.html` and `frontend/roster.html` as the UI. Not yet tested end-to-end against a real database.
-- ⏳ **Phase 2 — QR check-in.** Not started (`api/sessions.py`, `api/checkin.py`, `frontend/dashboard.html`, `frontend/checkin.html` are still placeholders).
-- ⏳ **Phase 3 — Stats.** Not started (`api/stats.py` is a placeholder).
+- ✅ **Phase 1 — Roster management.** Login + roster CRUD/CSV upload, tested end-to-end.
+- ✅ **Phase 2 — QR check-in.** Rotating token, live dashboard, roster validation, tested end-to-end.
+- ✅ **Phase 3 — Stats.** `api/stats.py` computes attendance % per student (based on how many of the sessions held so far they attended), flags anyone under 80% as at-risk, and gives a session-by-session breakdown per student on click. `frontend/stats.html` shows summary cards (classes held, students, average attendance) plus the sortable-by-risk table. Not yet tested end-to-end.
+
+### How the rotating QR actually works
+
+There's no background process generating tokens on a timer — Vercel functions don't support that. Instead:
+1. The dashboard (running in the professor's browser) asks `/api/sessions/<id>/token` for a new token every 20 seconds and re-renders the QR itself.
+2. Each token is stored with a 25-second expiry (`TOKEN_LIFETIME_SECONDS` in `api/sessions.py`).
+3. `/api/checkin` only accepts a token that still exists and hasn't expired.
+
+The 20s/25s gap is deliberate breathing room so a checked-in student's request doesn't get rejected by a token that expired mid-flight.

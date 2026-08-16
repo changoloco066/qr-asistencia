@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estadísticas — Asistencia QR</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="stats-page">
+    <header>
+      <h1>Estadísticas</h1>
+      <div>
+        <a href="dashboard.html" class="secondary-link">Pasar lista</a>
+        <a href="roster.html" class="secondary-link">Lista de alumnos</a>
+        <button id="logout-btn" class="secondary">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section class="summary-cards">
+      <div class="card summary-card">
+        <span class="summary-value" id="summary-sessions">--</span>
+        <span class="summary-label">Clases dadas</span>
+      </div>
+      <div class="card summary-card">
+        <span class="summary-value" id="summary-students">--</span>
+        <span class="summary-label">Alumnos</span>
+      </div>
+      <div class="card summary-card">
+        <span class="summary-value" id="summary-avg">--%</span>
+        <span class="summary-label">Asistencia promedio</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Asistencia por alumno</h2>
+      <p class="hint">Click en un alumno para ver el detalle por clase. Los marcados en rojo están por debajo del 80% de asistencia.</p>
+      <table id="stats-table">
+        <thead>
+          <tr><th>Matrícula</th><th>Nombre</th><th>Asistencias</th><th>Faltas</th><th>%</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="card hidden" id="detail-card">
+      <h2 id="detail-name"></h2>
+      <table id="detail-table">
+        <thead>
+          <tr><th>Fecha</th><th>Estado</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="js/stats.js"></script>
+</body>
+</html>
