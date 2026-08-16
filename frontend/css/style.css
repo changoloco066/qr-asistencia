@@ -85,3 +85,5 @@ th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-siz
 }
 .qr-card { text-align: center; }
 #qrcode { display: flex; justify-content: center; margin: 16px 0; min-height: 220px; }
+.countdown { font-size: 13px; color: #777; }
+.countdown span { font-weight: 600; color: #2f6feb; }

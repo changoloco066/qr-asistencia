@@ -6,9 +6,11 @@ const authHeaders = { Authorization: `Bearer ${token}` };
 
 const TOKEN_ROTATE_MS = 20000; // rotate QR before the backend's 25s window closes
 const STATUS_POLL_MS = 4000;
+const COUNTDOWN_SECONDS = TOKEN_ROTATE_MS / 1000;
 
 let sessionId = null;
 let qrRenderer = null;
+let secondsLeft = COUNTDOWN_SECONDS;
 
 document.getElementById("logout-btn").addEventListener("click", () => {
   localStorage.removeItem("token");
@@ -47,6 +49,18 @@ async function rotateQr() {
     width: 220,
     height: 220,
   });
+
+  secondsLeft = COUNTDOWN_SECONDS;
+  updateCountdownDisplay();
+}
+
+function updateCountdownDisplay() {
+  document.getElementById("countdown").textContent = secondsLeft;
+}
+
+function tickCountdown() {
+  secondsLeft = Math.max(0, secondsLeft - 1);
+  updateCountdownDisplay();
 }
 
 async function pollStatus() {
@@ -80,6 +94,7 @@ async function init() {
 
   setInterval(rotateQr, TOKEN_ROTATE_MS);
   setInterval(pollStatus, STATUS_POLL_MS);
+  setInterval(tickCountdown, 1000);
 }
 
 init();
