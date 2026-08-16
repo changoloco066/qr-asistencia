@@ -45,12 +45,6 @@ button.secondary:hover { background: #52585f; }
 .hidden { display: none; }
 
 .roster-page { max-width: 700px; margin: 40px auto; padding: 0 16px; }
-.roster-page header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
 
 .card {
   background: white;
@@ -71,3 +65,23 @@ table { width: 100%; border-collapse: collapse; margin-top: 12px; }
 th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px; }
 .delete-btn { background: #c0392b; margin-top: 0; padding: 4px 10px; font-size: 12px; }
 .delete-btn:hover { background: #922b21; }
+
+.dashboard-page { max-width: 900px; margin: 40px auto; padding: 0 16px; }
+.roster-page header,
+.dashboard-page header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.roster-page header > div,
+.dashboard-page header > div { display: flex; align-items: center; gap: 12px; }
+.secondary-link { color: #2f6feb; text-decoration: none; font-size: 14px; }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+}
+.qr-card { text-align: center; }
+#qrcode { display: flex; justify-content: center; margin: 16px 0; min-height: 220px; }

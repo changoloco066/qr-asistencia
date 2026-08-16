@@ -1,1 +1,40 @@
-<!-- TODO: implement -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pase de lista — Asistencia QR</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <main class="dashboard-page">
+    <header>
+      <h1>Pase de lista de hoy</h1>
+      <div>
+        <a href="roster.html" class="secondary-link">Lista de alumnos</a>
+        <button id="logout-btn" class="secondary">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section class="dashboard-grid">
+      <div class="card qr-card">
+        <h2>Escanea para pasar lista</h2>
+        <div id="qrcode"></div>
+        <p class="hint">El código cambia cada pocos segundos, es normal.</p>
+      </div>
+
+      <div class="card">
+        <h2>Presentes: <span id="checked-count">0</span> / <span id="total-count">0</span></h2>
+        <table id="status-table">
+          <thead>
+            <tr><th>Matrícula</th><th>Nombre</th><th>Hora</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
