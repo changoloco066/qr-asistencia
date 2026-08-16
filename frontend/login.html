@@ -1,1 +1,25 @@
-<!-- TODO: implement -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión — Asistencia QR</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="auth-card">
+    <h1>Asistencia QR</h1>
+    <form id="login-form">
+      <label for="username">Usuario</label>
+      <input type="text" id="username" required autocomplete="username">
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" required autocomplete="current-password">
+
+      <button type="submit">Entrar</button>
+      <p id="error-msg" class="error hidden"></p>
+    </form>
+  </main>
+  <script src="js/login.js"></script>
+</body>
+</html>

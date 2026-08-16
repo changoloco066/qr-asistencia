@@ -98,6 +98,19 @@ Deployed on Vercel (free Hobby tier). Push to `main` → Vercel auto-deploys. Da
 
 GitHub repo → **Settings → Collaborators and teams → Add people** → enter their GitHub username or email. They'll get an invite email and need to accept it before they can push.
 
+## Getting a database running
+
+1. Create a free Postgres database on [Neon](https://neon.tech) or [Supabase](https://supabase.com).
+2. Run `db/schema.sql` against it (both providers have a SQL editor in their dashboard, or use `psql "$DATABASE_URL" -f db/schema.sql`).
+3. Copy `.env.example` to `.env` and fill in `DATABASE_URL` and `SECRET_KEY` (`SECRET_KEY` can be any long random string — it signs the login tokens).
+4. Seed the one teacher account:
+   ```bash
+   DATABASE_URL=... python scripts/seed_teacher.py mama_username her-password
+   ```
+   There's no signup flow on purpose — one professor, one account, created once.
+
 ## Status
 
-Early planning stage. Folder structure and README are scaffolded; endpoints are not yet implemented.
+- ✅ **Phase 1 — Roster management.** `api/auth.py` (login, JWT) and `api/roster.py` (add one student, bulk CSV upload, delete) are implemented, with `frontend/login.html` and `frontend/roster.html` as the UI. Not yet tested end-to-end against a real database.
+- ⏳ **Phase 2 — QR check-in.** Not started (`api/sessions.py`, `api/checkin.py`, `frontend/dashboard.html`, `frontend/checkin.html` are still placeholders).
+- ⏳ **Phase 3 — Stats.** Not started (`api/stats.py` is a placeholder).

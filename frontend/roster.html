@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de alumnos — Asistencia QR</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="roster-page">
+    <header>
+      <h1>Lista de alumnos</h1>
+      <button id="logout-btn" class="secondary">Cerrar sesión</button>
+    </header>
+
+    <section class="card">
+      <h2>Agregar alumno</h2>
+      <form id="add-form">
+        <input type="text" id="matricula" placeholder="Matrícula" required>
+        <input type="text" id="full-name" placeholder="Nombre completo" required>
+        <button type="submit">Agregar</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Cargar CSV</h2>
+      <p class="hint">Columnas esperadas: <code>matricula,full_name</code></p>
+      <input type="file" id="csv-input" accept=".csv">
+      <button id="upload-btn">Subir</button>
+      <p id="upload-msg"></p>
+    </section>
+
+    <section class="card">
+      <h2>Alumnos registrados (<span id="student-count">0</span>)</h2>
+      <table id="roster-table">
+        <thead>
+          <tr><th>Matrícula</th><th>Nombre</th><th></th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="js/roster.js"></script>
+</body>
+</html>

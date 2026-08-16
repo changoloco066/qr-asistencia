@@ -1,1 +1,73 @@
-/* TODO: implement */
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f4f5f7;
+  margin: 0;
+  color: #1f2430;
+}
+
+.auth-card {
+  max-width: 360px;
+  margin: 100px auto;
+  background: white;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.auth-card h1 { font-size: 20px; margin-bottom: 24px; }
+
+form label { display: block; margin-top: 12px; font-size: 14px; color: #555; }
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border: 1px solid #d5d8dd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background: #2f6feb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+button:hover { background: #2558c4; }
+button.secondary { background: #6b7280; margin-top: 0; }
+button.secondary:hover { background: #52585f; }
+
+.error { color: #c0392b; margin-top: 12px; font-size: 14px; }
+.hidden { display: none; }
+
+.roster-page { max-width: 700px; margin: 40px auto; padding: 0 16px; }
+.roster-page header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+}
+.card h2 { font-size: 16px; margin-top: 0; }
+
+#add-form { display: flex; gap: 8px; }
+#add-form input { flex: 1; padding: 8px; border: 1px solid #d5d8dd; border-radius: 6px; }
+#add-form button { margin-top: 0; }
+
+.hint { font-size: 13px; color: #777; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px; }
+.delete-btn { background: #c0392b; margin-top: 0; padding: 4px 10px; font-size: 12px; }
+.delete-btn:hover { background: #922b21; }

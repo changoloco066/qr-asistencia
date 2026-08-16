@@ -1,12 +1,18 @@
+CREATE TABLE teachers (
+    id              SERIAL PRIMARY KEY,
+    username        VARCHAR(50) UNIQUE NOT NULL,
+    password_hash   VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE students (
     matricula   VARCHAR(20) PRIMARY KEY,
     full_name   VARCHAR(120) NOT NULL
 );
 
 CREATE TABLE sessions (
-    id          SERIAL PRIMARY KEY,
-    session_date DATE NOT NULL,
-    created_at  TIMESTAMP DEFAULT now()
+    id            SERIAL PRIMARY KEY,
+    session_date  DATE NOT NULL,
+    created_at    TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE session_tokens (
