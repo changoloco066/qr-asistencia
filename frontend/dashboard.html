@@ -18,11 +18,18 @@
       </div>
     </header>
 
-    <section class="dashboard-grid">
+    <section class="card" id="start-panel">
+      <h2>Clase de hoy</h2>
+      <p class="hint">Todavía no has iniciado el pase de lista de hoy.</p>
+      <button id="start-btn">Iniciar clase de hoy</button>
+    </section>
+
+    <section class="dashboard-grid hidden" id="active-panel">
       <div class="card qr-card">
         <h2>Escanea para pasar lista</h2>
         <div id="qrcode"></div>
         <p class="countdown">Se actualiza en <span id="countdown">--</span>s</p>
+        <button id="finish-btn">Finalizar clase</button>
       </div>
 
       <div class="card">
@@ -34,6 +41,19 @@
           <tbody></tbody>
         </table>
       </div>
+    </section>
+
+    <section class="card hidden" id="finished-panel">
+      <h2>Clase de hoy finalizada</h2>
+      <p class="hint">
+        Se registraron <span id="finished-count">0</span> asistencias.
+        El QR ya no acepta nuevos registros.
+      </p>
+      <button id="reopen-btn" class="secondary">Reabrir clase</button>
+    </section>
+
+    <section class="danger-zone hidden" id="danger-zone">
+      <button id="cancel-btn" class="danger">Cancelar clase de hoy (borra lo registrado)</button>
     </section>
   </main>
   <script src="js/dashboard.js"></script>

@@ -24,6 +24,16 @@ def checkin():
     conn = get_connection()
     try:
         with conn.cursor() as cur:
+            # 0. session must exist and not already be finished
+            cur.execute(
+                "SELECT finished FROM sessions WHERE id = %s", (session_id,)
+            )
+            session_row = cur.fetchone()
+            if not session_row:
+                return jsonify({"error": "session_not_found"}), 404
+            if session_row["finished"]:
+                return jsonify({"error": "session_finished"}), 400
+
             # 1. token must exist for this session and not be expired
             cur.execute(
                 """SELECT 1 FROM session_tokens

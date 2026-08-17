@@ -85,8 +85,24 @@ th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-siz
 }
 .qr-card { text-align: center; }
 #qrcode { display: flex; justify-content: center; margin: 16px 0; min-height: 220px; }
-.countdown { font-size: 13px; color: #777; }
+.countdown { font-size: 13px; color: #777; margin-bottom: 12px; }
 .countdown span { font-weight: 600; color: #2f6feb; }
+#start-panel, #finished-panel { text-align: center; }
+
+.danger-zone {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e4e8;
+  text-align: center;
+}
+button.danger {
+  background: transparent;
+  color: #c0392b;
+  border: 1px solid #c0392b;
+  font-size: 13px;
+  padding: 8px 14px;
+}
+button.danger:hover { background: #c0392b; color: white; }
 
 .stats-page { max-width: 800px; margin: 40px auto; padding: 0 16px; }
 .stats-page header {

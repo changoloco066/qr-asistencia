@@ -47,14 +47,22 @@ def start_session():
 def rotate_token(session_id):
     """Issue a fresh token for this session, valid for TOKEN_LIFETIME_SECONDS.
     The dashboard calls this on a timer and re-renders the QR with the new token."""
-    token = secrets.token_urlsafe(24)
-    expires_at = datetime.datetime.utcnow() + datetime.timedelta(
-        seconds=TOKEN_LIFETIME_SECONDS
-    )
-
     conn = get_connection()
     try:
         with conn.cursor() as cur:
+            cur.execute(
+                "SELECT finished FROM sessions WHERE id = %s", (session_id,)
+            )
+            session_row = cur.fetchone()
+            if not session_row:
+                return jsonify({"error": "session_not_found"}), 404
+            if session_row["finished"]:
+                return jsonify({"error": "session_finished"}), 400
+
+            token = secrets.token_urlsafe(24)
+            expires_at = datetime.datetime.utcnow() + datetime.timedelta(
+                seconds=TOKEN_LIFETIME_SECONDS
+            )
             cur.execute(
                 """INSERT INTO session_tokens (session_id, token, expires_at)
                    VALUES (%s, %s, %s)""",
@@ -65,6 +73,104 @@ def rotate_token(session_id):
         conn.close()
 
     return jsonify({"token": token, "expires_at": expires_at.isoformat()})
+
+
+@sessions_bp.route("/api/sessions/today", methods=["GET"])
+@require_auth
+def get_today_session():
+    """Read-only check -- does NOT create a session. Lets the dashboard
+    resume an already-started, still-active class on reload without
+    accidentally starting one that was never begun."""
+    today = datetime.date.today()
+
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT id, finished FROM sessions WHERE session_date = %s",
+                (today,),
+            )
+            existing = cur.fetchone()
+    finally:
+        conn.close()
+
+    if not existing:
+        return jsonify({"exists": False})
+
+    return jsonify(
+        {
+            "exists": True,
+            "session_id": existing["id"],
+            "finished": existing["finished"],
+        }
+    )
+
+
+@sessions_bp.route("/api/sessions/<int:session_id>/finish", methods=["POST"])
+@require_auth
+def finish_session(session_id):
+    """Closes today's roll call without deleting anything -- attendance
+    already logged stays, but no new tokens can be issued and the dashboard
+    stops polling. Different from cancel, which deletes the session entirely."""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE sessions SET finished = TRUE WHERE id = %s", (session_id,)
+            )
+            updated = cur.rowcount
+        conn.commit()
+    finally:
+        conn.close()
+
+    if not updated:
+        return jsonify({"error": "session_not_found"}), 404
+
+    return jsonify({"ok": True})
+
+
+@sessions_bp.route("/api/sessions/<int:session_id>/reopen", methods=["POST"])
+@require_auth
+def reopen_session(session_id):
+    """Undo an accidental 'Finalizar clase' -- resumes the same session
+    instead of making her start a brand new one."""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE sessions SET finished = FALSE WHERE id = %s", (session_id,)
+            )
+            updated = cur.rowcount
+        conn.commit()
+    finally:
+        conn.close()
+
+    if not updated:
+        return jsonify({"error": "session_not_found"}), 404
+
+    return jsonify({"ok": True})
+
+
+@sessions_bp.route("/api/sessions/today", methods=["DELETE"])
+@require_auth
+def cancel_today_session():
+    """Undo an accidental 'Iniciar clase' click -- removes today's session
+    and, via ON DELETE CASCADE, its tokens and any attendance already logged."""
+    today = datetime.date.today()
+
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM sessions WHERE session_date = %s", (today,))
+            deleted = cur.rowcount
+        conn.commit()
+    finally:
+        conn.close()
+
+    if not deleted:
+        return jsonify({"error": "no_session_today"}), 404
+
+    return jsonify({"ok": True})
 
 
 @sessions_bp.route("/api/sessions/<int:session_id>/status", methods=["GET"])

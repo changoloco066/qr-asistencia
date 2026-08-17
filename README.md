@@ -114,6 +114,7 @@ GitHub repo → **Settings → Collaborators and teams → Add people** → ente
 - ✅ **Phase 1 — Roster management.** Login + roster CRUD/CSV upload, tested end-to-end.
 - ✅ **Phase 2 — QR check-in.** Rotating token, live dashboard, roster validation, tested end-to-end.
 - ✅ **Phase 3 — Stats.** `api/stats.py` computes attendance % per student (based on how many of the sessions held so far they attended), flags anyone under 80% as at-risk, and gives a session-by-session breakdown per student on click. `frontend/stats.html` shows summary cards (classes held, students, average attendance) plus the sortable-by-risk table. Not yet tested end-to-end.
+- ✅ **No passive session creation, and a real finished state.** A session only exists once the professor explicitly clicks "Iniciar clase de hoy". While active she can "Finalizar clase" (closes roll call, keeps the attendance already logged, blocks new check-ins) or "Cancelar clase de hoy" (deletes the session entirely, for a mistaken start). A finished class can be "Reabierta" if she closed it too early. Default state on any page load, for any day without an explicit start, is simply "no class" — nothing is ever created just by opening the dashboard.
 
 ### How the rotating QR actually works
 
